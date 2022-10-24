@@ -17,5 +17,11 @@ namespace Student_System.Models
         [DataType(DataType.Url)]
         public string Url { get; set; }
 
+        [Display(Name = "Course")]
+        public int CourseId { get; set; }
+
+        //FK
+        public virtual Courses? Course { get; set; }
+
     }
 }

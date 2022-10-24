@@ -10,7 +10,7 @@ namespace Student_System.Models
 
         public int CourseId { get; set; }
 
-        public Students Students { get; set; }
-        public Courses Courses  { get; set; }
+        public virtual Students? Student { get; set; }
+        public virtual Courses? Course { get; set; }
     }
 }
