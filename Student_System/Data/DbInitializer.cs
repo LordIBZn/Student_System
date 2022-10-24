@@ -5,7 +5,7 @@ namespace Student_System.Data
     {
         public static void Initialize(Student_SystemContext context)
         {
-            //context.Database.EnsureCreated();
+            context.Database.EnsureCreated();
 
             if (context.Students.Any())
             {
@@ -43,6 +43,11 @@ namespace Student_System.Data
             }
             context.SaveChanges();
 
+            if (context.Courses.Any())
+            {
+                return;
+            }
+
             var courses = new Courses[]
             {
                 new Courses
@@ -57,7 +62,7 @@ namespace Student_System.Data
                 },
                 new Courses
                 {
-                   
+                    
                     Name = "Calculo",
                     Description="",
                     StartDate = DateTime.Parse("2022-03-10"),
@@ -80,22 +85,30 @@ namespace Student_System.Data
             }
             context.SaveChanges();
 
+            if (context.Resources.Any())
+            {
+                return;
+            }
+
             var resources = new Resources[]
             {
                 new Resources
                 {
+                    
                     Name = "ASP.NET",
                     typeOfResource ="document",
                     Url ="https://learn.microsoft.com/es-es/aspnet/core/data/ef-mvc/complex-data-model?view=aspnetcore-6.0#prerequisites"
                 },
                 new Resources
                 {
+                    
                     Name= "C#",
                     typeOfResource ="presentation",
                     Url = "https://profesorezequielruizgarcia.files.wordpress.com/2013/08/c-sharp-para-estudiantes.pdf"
                 },
                 new Resources
                 {
+                    
                     Name = "Base de datos SQLServer",
                     typeOfResource = "video",
                     Url = "https://www.youtube.com/watch?v=uUdKAYl-F7g&t=6356s"
@@ -107,22 +120,30 @@ namespace Student_System.Data
             }
             context.SaveChanges();
 
+            if (context.Homework.Any())
+            {
+                return;
+            }
+
             var homework = new Homework[]
             {
                 new Homework
                 {
+                    
                     Content="C# para estudiante",
                     ContentType = "pdf",
                     SubmissionDate = DateTime.Parse("2022-10-25")
                 },
                 new Homework
                 {
+                    
                     Content = "Student System",
                     ContentType = "pdf",
                     SubmissionDate = DateTime.Parse("2022-10-21")
                 },
                 new Homework
                 {
+                    
                     Content = "Create Models",
                     ContentType = "pdf",
                     SubmissionDate = DateTime.Parse("2022-10-21")
@@ -133,6 +154,11 @@ namespace Student_System.Data
                 context.Homework.Add(h);
             }
             context.SaveChanges();
+
+            if (context.StudentCourses.Any())
+            {
+                return;
+            }
 
             var studentCourse = new StudentCourses[]
             {

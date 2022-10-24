@@ -23,5 +23,8 @@ namespace Student_System.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? BirthDay { get; set; }
 
+        public ICollection<Homework> Homework { get; set; }
+
+
     }
 }

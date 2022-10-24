@@ -178,7 +178,7 @@ namespace Student_System.Migrations
                         .HasForeignKey("CoursesId");
 
                     b.HasOne("Student_System.Models.Students", "Students")
-                        .WithMany()
+                        .WithMany("Homework")
                         .HasForeignKey("StudentsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -217,6 +217,11 @@ namespace Student_System.Migrations
                     b.Navigation("Homeworks");
 
                     b.Navigation("Resources");
+                });
+
+            modelBuilder.Entity("Student_System.Models.Students", b =>
+                {
+                    b.Navigation("Homework");
                 });
 #pragma warning restore 612, 618
         }

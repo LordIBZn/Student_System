@@ -12,8 +12,8 @@ using Student_System.Data;
 namespace Student_System.Migrations
 {
     [DbContext(typeof(Student_SystemContext))]
-    [Migration("20221021185204_ALTERTABLEHOMEWORK")]
-    partial class ALTERTABLEHOMEWORK
+    [Migration("20221024211220_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -180,7 +180,7 @@ namespace Student_System.Migrations
                         .HasForeignKey("CoursesId");
 
                     b.HasOne("Student_System.Models.Students", "Students")
-                        .WithMany()
+                        .WithMany("Homework")
                         .HasForeignKey("StudentsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -219,6 +219,11 @@ namespace Student_System.Migrations
                     b.Navigation("Homeworks");
 
                     b.Navigation("Resources");
+                });
+
+            modelBuilder.Entity("Student_System.Models.Students", b =>
+                {
+                    b.Navigation("Homework");
                 });
 #pragma warning restore 612, 618
         }

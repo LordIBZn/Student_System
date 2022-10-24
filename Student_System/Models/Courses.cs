@@ -26,8 +26,8 @@ namespace Student_System.Models
         [DataType(DataType.Currency)]
         public float price { get; set; }
 
-        public ICollection<Resources> Resources { get; set; }
-        public ICollection<Homework> Homeworks { get; set; }
+        public ICollection<Resources>? Resources { get; set; }
+        public ICollection<Homework>? Homeworks { get; set; }
         
     }
 }
