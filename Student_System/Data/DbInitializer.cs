@@ -47,7 +47,7 @@ namespace Student_System.Data
             {
                 new Courses
                 {
-                    Id = 1050,
+                   
                     Name = "Astrofisica",
                     Description = "",
                     StartDate = DateTime.Parse("2022-03-10"),
@@ -57,7 +57,7 @@ namespace Student_System.Data
                 },
                 new Courses
                 {
-                    Id = 4022,
+                   
                     Name = "Calculo",
                     Description="",
                     StartDate = DateTime.Parse("2022-03-10"),
@@ -66,7 +66,7 @@ namespace Student_System.Data
                 },
                 new Courses
                 {
-                    Id = 4041 ,
+                    
                     Name = "Matematicas",
                     Description ="",
                     StartDate = DateTime.Parse("2022-03-10"),
