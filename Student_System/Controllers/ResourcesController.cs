@@ -22,6 +22,9 @@ namespace Student_System.Controllers
         // GET: Resources
         public async Task<IActionResult> Index()
         {
+            var CourseResources = await _context.Resources
+                .Include(cr => cr.Course)
+                .ToListAsync();
               return View(await _context.Resources.ToListAsync());
         }
 
@@ -46,6 +49,8 @@ namespace Student_System.Controllers
         // GET: Resources/Create
         public IActionResult Create()
         {
+            var Courses = _context.Courses.ToList();
+            ViewData["Courses"] = new SelectList(Courses, "Id", "Name");
             return View();
         }
 
@@ -54,7 +59,7 @@ namespace Student_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,typeOfResource,Url")] Resources resources)
+        public async Task<IActionResult> Create([Bind("Id,Name,typeOfResource,Url,Courses,CourseId")] Resources resources)
         {
             if (ModelState.IsValid)
             {
@@ -68,6 +73,9 @@ namespace Student_System.Controllers
         // GET: Resources/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var Courses = _context.Courses.ToList();
+            ViewData["Courses"] = new SelectList(Courses, "Id", "Name");
+
             if (id == null || _context.Resources == null)
             {
                 return NotFound();
@@ -86,7 +94,7 @@ namespace Student_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,typeOfResource,Url")] Resources resources)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,typeOfResource,Url,Courses,CourseId")] Resources resources)
         {
             if (id != resources.Id)
             {

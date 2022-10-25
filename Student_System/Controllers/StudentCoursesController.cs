@@ -22,7 +22,12 @@ namespace Student_System.Controllers
         // GET: StudentCourses
         public async Task<IActionResult> Index()
         {
-              return View(await _context.StudentCourses.ToListAsync());
+            var StudentCourses = await _context.StudentCourses
+                .Include(c => c.Student)
+                .Include(c => c.Course)
+                .ToListAsync();
+
+              return View(StudentCourses);
         }
 
         // GET: StudentCourses/Details/5
@@ -46,6 +51,12 @@ namespace Student_System.Controllers
         // GET: StudentCourses/Create
         public IActionResult Create()
         {
+            var Students = _context.Students.ToList();
+            ViewData["Students"] = new SelectList(Students, "Id", "Name");
+
+            var Courses = _context.Courses.ToList();
+            ViewData["Courses"] = new SelectList(Courses, "Id", "Name");
+
             return View();
         }
 
@@ -54,7 +65,7 @@ namespace Student_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StudentId,CourseId")] StudentCourses studentCourses)
+        public async Task<IActionResult> Create([Bind("StudentId,CourseId,Courses,Students")] StudentCourses studentCourses)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +97,7 @@ namespace Student_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StudentId,CourseId")] StudentCourses studentCourses)
+        public async Task<IActionResult> Edit(int id, [Bind("StudentId,CourseId,Courses,Students")] StudentCourses studentCourses)
         {
             if (id != studentCourses.StudentId)
             {

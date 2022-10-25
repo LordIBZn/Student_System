@@ -28,6 +28,14 @@
                 <input asp-for="SubmissionDate" class="form-control" />
                 <span asp-validation-for="SubmissionDate" class="text-danger"></span>
             </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label"> Select Student </label>
+                        <select asp-for="StudentsId" class="form-control" asp-items="@ViewBag.Students"></select>
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

@@ -22,7 +22,11 @@ namespace Student_System.Controllers
         // GET: Homework
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Homework.ToListAsync());
+            var StudentHomework = await _context.Homework
+                .Include(sh => sh.Students)
+                .ToListAsync();
+
+              return View(StudentHomework);
         }
 
         // GET: Homework/Details/5
@@ -70,6 +74,9 @@ namespace Student_System.Controllers
         // GET: Homework/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var Students = _context.Students.ToList();
+            ViewData["Students"] = new SelectList(Students, "Id", "Name");
+
             if (id == null || _context.Homework == null)
             {
                 return NotFound();
