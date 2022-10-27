@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Student_System.Models.Courses>
+
+@{
+    ViewData["Title"] = "ResourceMore";
+}
+
+<h1>Details</h1>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Resources.Count)
+        </td>
+        <td>
+            <a asp-action="Index">Back to List</a>
+        </td>
+    </tr>
+}

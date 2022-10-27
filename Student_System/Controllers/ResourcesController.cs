@@ -23,9 +23,11 @@ namespace Student_System.Controllers
         public async Task<IActionResult> Index()
         {
             var CourseResources = await _context.Resources
-                .Include(cr => cr.Course)
+                .Include(rc => rc.Course)
+                .OrderBy(rc => rc.Course.StartDate)
+                .ThenByDescending(rc => rc.Course.EndDate)
                 .ToListAsync();
-              return View(await _context.Resources.ToListAsync());
+              return View(CourseResources);
         }
 
         // GET: Resources/Details/5

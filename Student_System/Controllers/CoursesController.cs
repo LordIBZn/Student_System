@@ -22,12 +22,25 @@ namespace Student_System.Controllers
         // GET: Courses
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Courses.ToListAsync());
+            var ResourceCourses = await _context.Courses
+                .Include(rc => rc.Resources)
+                .OrderBy(rc => rc.StartDate)
+                .ThenByDescending(rc => rc.EndDate)
+                .ToListAsync();
+
+            
+            return View(ResourceCourses);
         }
 
         // GET: Courses/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var ResourceCourses = await _context.Courses
+                .Include(rc => rc.Resources)
+                .OrderBy(rc => rc.StartDate)
+                .ThenByDescending(rc => rc.EndDate)
+                .FirstOrDefaultAsync(rc => rc.Id == id);
+
             if (id == null || _context.Courses == null)
             {
                 return NotFound();
@@ -40,12 +53,26 @@ namespace Student_System.Controllers
                 return NotFound();
             }
 
-            return View(courses);
+            return View(ResourceCourses);
+        }
+
+        public async Task <IActionResult> ResourceMore()
+        {
+
+            var ResourceCount = await _context.Courses
+               .Include(rc => rc.Resources)
+               .Where(rc => rc.Resources.Count() > 5)
+               .OrderByDescending(rc => rc.StartDate)
+               .OrderByDescending(rc => rc.Resources.Count()).ToListAsync();
+               
+            return View(ResourceCount);
         }
 
         // GET: Courses/Create
         public IActionResult Create()
         {
+            var Resources = _context.Courses.ToList();
+            ViewData["Resources"] = new SelectList(Resources, "Id", "Name");
             return View();
         }
 
@@ -54,7 +81,7 @@ namespace Student_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,price")] Courses courses)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,price,Resources")] Courses courses)
         {
             if (ModelState.IsValid)
             {
@@ -68,6 +95,10 @@ namespace Student_System.Controllers
         // GET: Courses/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+           
+            var Resource = _context.Courses.ToList();
+            ViewData["Resource"] = new SelectList(Resource, "Id", "Name");
+
             if (id == null || _context.Courses == null)
             {
                 return NotFound();
@@ -86,7 +117,7 @@ namespace Student_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,price")] Courses courses)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,price,Resources")] Courses courses)
         {
             if (id != courses.Id)
             {

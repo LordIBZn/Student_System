@@ -41,6 +41,42 @@
             @Html.DisplayFor(model => model.price)
         </dd>
     </dl>
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th>
+                    Resource Name
+                </th>
+                <th>
+                    Resource Type
+                </th>
+                <th>
+                    URL
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Resources)
+            {
+                <tr>
+                    
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.typeOfResource)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Url)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
