@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Student_System.Models.CoursesViewModel>
+
+@{
+    ViewData["Title"] = "AllCoursesonGivenDate";
+}
+
+<div>
+    <h4>Courses</h4>
+   
+    
+
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+               
+                <th>
+                    Course Name
+                </th>
+                <th>
+                    Star Date
+                </th>
+                <th>
+                    End Date
+                </th>
+                <th>
+                    Course Duration
+                </th>
+                <th>
+                    Student Count
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StarDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseDuration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentCount)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>

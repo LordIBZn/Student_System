@@ -56,7 +56,7 @@ namespace Student_System.Controllers
             return View(ResourceCourses);
         }
 
-        public async Task <IActionResult> ResourceMore()
+        public async Task<IActionResult> ResourceMore()
         {
 
             var ResourceCount = await _context.Courses
@@ -67,6 +67,51 @@ namespace Student_System.Controllers
                
             return View(ResourceCount);
         }
+        [HttpPost]
+        public async Task<IActionResult> AllCoursesonGivenDate(DateTime? date)
+        {
+            
+            var AllCoursesonGivenDate = await _context.Courses
+                .Where(acg => acg.EndDate <= date).ToListAsync();
+
+            var courses = new List<CoursesViewModel>();
+
+            AllCoursesonGivenDate.ForEach(C =>
+            {
+                var CourseWiew = new CoursesViewModel()
+                {
+                    CourseName = C.Name,
+                    StarDate = C.StartDate,
+                    EndDate = C.EndDate,
+                    CourseDuration = C.EndDate.Subtract(C.StartDate),
+                    StudentCount = NumStudents(C.Id)
+                };
+                courses.Add(CourseWiew);
+            });
+
+            //AllCoursesonGivenDate.ForEach(cr =>
+            //{
+            //    var fr = new Courses(
+            //        {
+            //        StartDate = cr.StartDate,
+            //    });
+
+            //    dr.Add(cr);
+            //});
+
+            return View(courses);
+        }
+
+        public int NumStudents(int CurseId)
+        {
+            var NumStudent = _context.StudentCourses
+                .Where(c => c.CourseId == CurseId)
+                .Count();
+
+            return NumStudent;
+        }
+        
+
 
         // GET: Courses/Create
         public IActionResult Create()

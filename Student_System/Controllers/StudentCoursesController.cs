@@ -23,12 +23,26 @@ namespace Student_System.Controllers
         public async Task<IActionResult> Index()
         {
             var StudentCourses = await _context.StudentCourses
-                .Include(c => c.Student)
-                .Include(c => c.Course)
+                .Include(sc => sc.Student)
+                .Include(sc => sc.Course)
                 .ToListAsync();
 
               return View(StudentCourses);
         }
+
+        //public async Task<IActionResult> AllCoursesonGivenDate()
+        //{
+        //    DateTime GivenDate = DateTime.Parse("2021-12-01");
+
+        //    var AllCoursesonGivenDate = await _context.StudentCourses
+        //        .Include(acg => acg.Course)
+        //        .Include(acg => acg.Student)
+        //        .OrderBy(acg => acg.Student)
+        //        .Where(acg => acg.Course.StartDate == GivenDate).ToListAsync();
+                
+
+        //    return View(AllCoursesonGivenDate);
+        //}
 
         // GET: StudentCourses/Details/5
         public async Task<IActionResult> Details(int? id)
