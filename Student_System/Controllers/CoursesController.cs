@@ -71,7 +71,8 @@ namespace Student_System.Controllers
         public async Task<IActionResult> AllCoursesonGivenDate(DateTime? EndDate)
         {
             var AllCoursesonGivenDate = await _context.Courses
-                .Where(acg => acg.EndDate <= EndDate).ToListAsync();
+                .Where(acg => acg.EndDate <= EndDate)
+                .ToListAsync();
 
             var courses = new List<CoursesViewModel>();
 
@@ -84,11 +85,15 @@ namespace Student_System.Controllers
                     EndDate = C.EndDate,
                     CourseDuration = C.EndDate.Subtract(C.StartDate),
                     StudentCount = NumStudents(C.Id)
+
                 };
                 courses.Add(CourseWiew);
             });
 
-            return View(courses);
+            var coursesOrderBy = courses.OrderByDescending(c => c.StudentCount)
+                .ThenByDescending(c => c.CourseDuration);
+
+            return View(coursesOrderBy);
         }
 
         public int NumStudents(int CurseId)
