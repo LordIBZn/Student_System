@@ -90,10 +90,10 @@ namespace Student_System.Controllers
                 courses.Add(CourseWiew);
             });
 
-            var coursesOrderBy = courses.OrderByDescending(c => c.StudentCount)
+            var CoursesOrderBy = courses.OrderByDescending(c => c.StudentCount)
                 .ThenByDescending(c => c.CourseDuration);
 
-            return View(coursesOrderBy);
+            return View(CoursesOrderBy);
         }
 
         public int NumStudents(int CurseId)
