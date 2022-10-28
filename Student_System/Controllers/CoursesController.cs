@@ -64,15 +64,14 @@ namespace Student_System.Controllers
                .Where(rc => rc.Resources.Count() > 5)
                .OrderByDescending(rc => rc.StartDate)
                .OrderByDescending(rc => rc.Resources.Count()).ToListAsync();
-               
+
             return View(ResourceCount);
         }
-        [HttpPost]
-        public async Task<IActionResult> AllCoursesonGivenDate(DateTime? date)
+        
+        public async Task<IActionResult> AllCoursesonGivenDate(DateTime? EndDate)
         {
-            
             var AllCoursesonGivenDate = await _context.Courses
-                .Where(acg => acg.EndDate <= date).ToListAsync();
+                .Where(acg => acg.EndDate <= EndDate).ToListAsync();
 
             var courses = new List<CoursesViewModel>();
 
@@ -88,16 +87,6 @@ namespace Student_System.Controllers
                 };
                 courses.Add(CourseWiew);
             });
-
-            //AllCoursesonGivenDate.ForEach(cr =>
-            //{
-            //    var fr = new Courses(
-            //        {
-            //        StartDate = cr.StartDate,
-            //    });
-
-            //    dr.Add(cr);
-            //});
 
             return View(courses);
         }

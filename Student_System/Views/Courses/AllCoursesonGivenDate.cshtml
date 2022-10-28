@@ -1,14 +1,26 @@
 ﻿@model IEnumerable<Student_System.Models.CoursesViewModel>
-
 @{
     ViewData["Title"] = "AllCoursesonGivenDate";
 }
 
 <div>
-    <h4>Courses</h4>
-   
-    
 
+    <h4>Courses</h4>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-controller="Courses" asp-action="AllCoursesonGivenDate" method="post">
+                <div>
+                    <label for="End Date">End Date</label>
+                    <input id="EndDate" type="date" class="form-control" name="EndDate" />
+                </div>
+                <div>
+                    <button class="btn btn-primary" type="submit">
+                        Send
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
     <hr />
     <table class="table">
         <thead>
