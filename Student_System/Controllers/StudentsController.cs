@@ -43,6 +43,72 @@ namespace Student_System.Controllers
             return View(students);
         }
 
+        public async Task<IActionResult> StudentNumberCourse(int? StudentId)
+        {
+            var Stundent = _context.Students.ToList();
+            ViewData["Stundent"] = new SelectList(Stundent, "Id", "Name");
+            
+            var StudentNumberCourse = await _context.Students
+                .ToListAsync();
+            
+            if(StudentId >= 1)
+            {
+                StudentNumberCourse = await _context.Students
+                .Where(snc => snc.Id == StudentId)
+                .ToListAsync();
+            }
+
+            var Students = new List<StudentNumberCourseViewModel>();
+            StudentNumberCourse.ForEach(c =>
+            {
+                var StudentNumberVie = new StudentNumberCourseViewModel()
+                {
+                    StudentName = c.Name,
+                    NumCourse = NumCourses(c.Id),
+                    TotalPrice = TotalPrice(c.Id),
+                    AvaregePrice = AvaregePrice(c.Id)
+
+                };
+                Students.Add(StudentNumberVie);
+            });
+            var StudentsOrderBy = Students.OrderByDescending(c => c.TotalPrice)
+                .ThenByDescending(c => c.NumCourse)
+                .ThenByDescending(c => c.StudentName);
+
+            return View(StudentsOrderBy);
+
+        }
+
+        public int NumCourses(int StudentId)
+        {
+            var NumCourses = _context.StudentCourses
+                .Where(c => c.StudentId == StudentId)
+                .Count();
+
+            return NumCourses;
+        }
+
+        public int TotalPrice(int studentId)
+        {
+            var TotalPrice = _context.StudentCourses
+                .Where(c => c.StudentId == studentId)
+                .Select(c => c.Course)
+                .Sum(c => c.price);
+            
+            return (int)(float)TotalPrice;
+        }
+
+        public int AvaregePrice(int StudentId)
+        {
+            var AvaregePrice = _context.StudentCourses
+                .Where(c => c.StudentId == StudentId)
+                .Select(c => c.Course)
+                .Average(c => c.price);
+                
+
+            return (int)(float)AvaregePrice;
+        }
+
         // GET: Students/Create
         public IActionResult Create()
         {

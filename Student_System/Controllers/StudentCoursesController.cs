@@ -39,7 +39,7 @@ namespace Student_System.Controllers
         //        .Include(acg => acg.Student)
         //        .OrderBy(acg => acg.Student)
         //        .Where(acg => acg.Course.StartDate == GivenDate).ToListAsync();
-                
+
 
         //    return View(AllCoursesonGivenDate);
         //}
