@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Student_System.Data;
 
@@ -11,9 +12,10 @@ using Student_System.Data;
 namespace Student_System.Migrations
 {
     [DbContext(typeof(Student_SystemContext))]
-    partial class Student_SystemContextModelSnapshot : ModelSnapshot
+    [Migration("20221104202756_CreateTableUser")]
+    partial class CreateTableUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

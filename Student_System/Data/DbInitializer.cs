@@ -183,7 +183,11 @@ namespace Student_System.Data
                 context.StudentCourses.Add(sc);
             }
             context.SaveChanges();
-        }
 
+            if (context.Users.Any())
+            {
+                return;
+            }
+        }
     }
 }
