@@ -184,10 +184,7 @@ namespace Student_System.Data
             }
             context.SaveChanges();
 
-            if (context.Users.Any())
-            {
-                return;
-            }
+            
         }
     }
 }

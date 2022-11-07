@@ -1,6 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Student_System.Models;
 using Student_System.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+
+
 namespace Student_System.Controllers
 {
     public class AccessController : Controller
@@ -11,7 +16,7 @@ namespace Student_System.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(User _user)
+        public async Task<IActionResult> Index(User _user)
         {
              UserAccess userAccess = new UserAccess();
 
@@ -19,6 +24,20 @@ namespace Student_System.Controllers
             
             if(user != null)
             {
+                var Claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.Name),
+                    new Claim("Email", user.Email),
+                };
+
+                foreach(string rol in user.Roles) { 
+                    Claims.Add(new Claim(ClaimTypes.Role, rol));
+                }
+
+                var ClaimsIdentity = new ClaimsIdentity(Claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(ClaimsIdentity));
+
                 return RedirectToAction("Index","Home");
             }
             else
@@ -26,6 +45,12 @@ namespace Student_System.Controllers
                 return View();
             }
 
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Access");
         }
     }
 }

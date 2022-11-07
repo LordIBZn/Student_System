@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Student_System.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization; 
 
 namespace Student_System.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

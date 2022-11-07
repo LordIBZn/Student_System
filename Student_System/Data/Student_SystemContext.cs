@@ -19,7 +19,7 @@ namespace Student_System.Data
         public DbSet<Student_System.Models.Resources> Resources { get; set; } = default!;
         public DbSet<Student_System.Models.Homework> Homework { get; set; } = default!;
         public DbSet<Student_System.Models.StudentCourses> StudentCourses { get; set; } = default!;
-        public DbSet<Student_System.Models.User> Users { get; set; } = default;
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,9 +28,8 @@ namespace Student_System.Data
             modelBuilder.Entity<Resources>().ToTable("Resources");
             modelBuilder.Entity<Homework>().ToTable("Homework");
             modelBuilder.Entity<StudentCourses>().ToTable("StudentCourses");
-            modelBuilder.Entity<User>().ToTable("Users");
+           
 
-            modelBuilder.Entity<User>().HasNoKey();
             modelBuilder.Entity<StudentCourses>().HasKey(c => new { c.StudentId, c.CourseId });
         }
     }
