@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Student_System.Models;
 
 namespace Student_System.Data
 {
-    public class Student_SystemContext : DbContext
+    public class Student_SystemContext : IdentityDbContext
     {
         public Student_SystemContext (DbContextOptions<Student_SystemContext> options)
             : base(options)
@@ -27,6 +28,7 @@ namespace Student_System.Data
             modelBuilder.Entity<Resources>().ToTable("Resources");
             modelBuilder.Entity<Homework>().ToTable("Homework");
             modelBuilder.Entity<StudentCourses>().ToTable("StudentCourses");
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<StudentCourses>().HasKey(c => new { c.StudentId, c.CourseId });
 
