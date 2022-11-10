@@ -8,9 +8,9 @@ namespace Student_System.Data
         {
             return new List<User>
             {
-                new User { Name = "Edgar", Email = "edgar@usuario.com", Password = "12345", Roles = new List<string> {"Administrador" } },
-                new User { Name = "Alhy",  Email = "alhy@user.com", Password = "12345", Roles = new List<string> {"Employee" } },
-                new User { Name = "Ivett", Email = "ivett@user.com", Password = "12345", Roles = new List<string> {"Supervisor" } }
+                new User {Name = "Edgar", Email = "edgar@usuario.com", Password = "12345", Roles = "Adminitrator"},
+                new User {Name = "Alhy",  Email = "alhy@user.com", Password = "12345", Roles = "Employee"},
+                new User {Name = "Ivett", Email = "ivett@user.com", Password = "12345", Roles = "Supervisor"}
             };
 
         }

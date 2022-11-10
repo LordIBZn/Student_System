@@ -7,11 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Student_System.Data;
 using Student_System.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Student_System.Controllers
 {
-    [Authorize]
     public class StudentCoursesController : Controller
     {
         private readonly Student_SystemContext _context;
