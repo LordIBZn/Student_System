@@ -163,27 +163,6 @@ namespace Student_System.Migrations
                     b.ToTable("Students", (string)null);
                 });
 
-            modelBuilder.Entity("Student_System.Models.User", b =>
-                {
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Roles")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable("Users", (string)null);
-                });
-
             modelBuilder.Entity("Student_System.Models.Homework", b =>
                 {
                     b.HasOne("Student_System.Models.Courses", null)
