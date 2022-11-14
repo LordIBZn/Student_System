@@ -8,7 +8,7 @@ using Student_System.Models;
 
 namespace Student_System.Data
 {
-    public class Student_SystemContext : IdentityDbContext
+    public class Student_SystemContext : IdentityDbContext<Student>
     {
         public Student_SystemContext (DbContextOptions<Student_SystemContext> options)
             : base(options)
