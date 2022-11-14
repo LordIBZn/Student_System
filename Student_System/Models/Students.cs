@@ -24,6 +24,10 @@ namespace Student_System.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? BirthDay { get; set; }
 
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+
         public virtual ICollection<Homework>? Homework { get; set; }
 
 

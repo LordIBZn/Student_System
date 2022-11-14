@@ -5,7 +5,7 @@ using Student_System.Models;
 
 namespace Student_System.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

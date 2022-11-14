@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Student_System.Models;
 
 namespace Student_System.Controllers
 {
+    [Authorize(Roles ="Admin,Student")]
     public class CoursesController : Controller
     {
         private readonly Student_SystemContext _context;
@@ -104,8 +106,9 @@ namespace Student_System.Controllers
 
             return NumStudent;
         }
-        
 
+
+        [Authorize(Roles ="Admin")]
 
         // GET: Courses/Create
         public IActionResult Create()
@@ -130,6 +133,8 @@ namespace Student_System.Controllers
             }
             return View(courses);
         }
+
+        [Authorize(Roles ="Admin")]
 
         // GET: Courses/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -186,6 +191,7 @@ namespace Student_System.Controllers
             return View(courses);
         }
 
+        [Authorize(Roles ="Admin")]
         // GET: Courses/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

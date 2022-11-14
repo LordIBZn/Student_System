@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Student_System.Models;
 
 namespace Student_System.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class StudentsController : Controller
     {
         private readonly Student_SystemContext _context;
@@ -120,7 +122,7 @@ namespace Student_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,PhoneNumber,RegitrationDate,BirthDay")] Students students)
+        public async Task<IActionResult> Create([Bind("Id,Name,PhoneNumber,RegitrationDate,BirthDay,Email")] Students students)
         {
             if (ModelState.IsValid)
             {
@@ -152,7 +154,7 @@ namespace Student_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,PhoneNumber,RegitrationDate,BirthDay")] Students students)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,PhoneNumber,RegitrationDate,BirthDay,Email")] Students students)
         {
             if (id != students.Id)
             {
