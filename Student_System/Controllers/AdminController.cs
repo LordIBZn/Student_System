@@ -9,10 +9,10 @@ namespace Student_System.Controllers
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<Student> _userManager;
 
         public AdminController(RoleManager<IdentityRole> roleManager, 
-            UserManager<IdentityUser> userManager)
+            UserManager<Student> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
