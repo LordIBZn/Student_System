@@ -2,13 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Student_System.Data;
 using Microsoft.AspNetCore.Identity;
-using Student_System.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Student_SystemContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Student_SystemContext") ?? throw new InvalidOperationException("Connection string 'Student_SystemContext' not found.")));
 
-builder.Services.AddDefaultIdentity<Student>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<Student_SystemContext>();
 

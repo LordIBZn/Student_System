@@ -9,10 +9,10 @@ namespace Student_System.Controllers
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<Student> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
         public AdminController(RoleManager<IdentityRole> roleManager, 
-            UserManager<Student> userManager)
+            UserManager<IdentityUser> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -200,7 +200,5 @@ namespace Student_System.Controllers
             }
             return RedirectToAction("EditRol", new { Id = rolId });
         }
-
-
     }
 }
