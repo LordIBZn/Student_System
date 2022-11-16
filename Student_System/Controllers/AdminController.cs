@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Student_System.Data;
 using Student_System.Models;
 
 namespace Student_System.Controllers
@@ -8,14 +11,16 @@ namespace Student_System.Controllers
     [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
+        private readonly Student_SystemContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<Student> _userManager;
 
         public AdminController(RoleManager<IdentityRole> roleManager, 
-            UserManager<Student> userManager)
+            UserManager<Student> userManager, Student_SystemContext context)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _context = context;
         }
 
         [HttpGet]
@@ -199,6 +204,46 @@ namespace Student_System.Controllers
                 }
             }
             return RedirectToAction("EditRol", new { Id = rolId });
+        }
+
+        [HttpGet]
+        [Route("Admin/CreateAcount")]
+        public IActionResult CreateAcount()
+        {
+            var Students = _context.Students.ToList();
+            ViewData["Students"] = new SelectList(Students, "Id", "Name");
+            return View();
+        }
+        
+        [HttpPost]
+        [Route("Admin/CreateAcount")]
+        public async Task<IActionResult> CreateAcount(CreateAcountViewModel model)
+        {
+            var Students = _context.Students.ToList();
+            ViewData["Students"] = new SelectList(Students, "Id", "Name");
+
+            if (ModelState.IsValid)
+            {
+                Student user = new Student
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    StudentsId = model.StudentsId,
+                    PasswordHash = model.Password,
+                };
+
+                IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("index", "home");
+                }
+                foreach (IdentityError error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            return View(model);
         }
     }
 }
