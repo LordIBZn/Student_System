@@ -5,10 +5,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Student_System.Data;
 using Student_System.Models;
+using MailKit.Net.Smtp;
+using MailKit;
+using MimeKit;
+using System.Net;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using NuGet.Protocol.Plugins;
 
 namespace Student_System.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly Student_SystemContext _context;
@@ -214,7 +223,7 @@ namespace Student_System.Controllers
             ViewData["Students"] = new SelectList(Students, "Id", "Name");
             return View();
         }
-        
+
         [HttpPost]
         [Route("Admin/CreateAcount")]
         public async Task<IActionResult> CreateAcount(CreateAcountViewModel model)
@@ -232,11 +241,38 @@ namespace Student_System.Controllers
                     PasswordHash = model.Password,
                 };
 
-                IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+                var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("index", "home");
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var confirmationLink = "https://localhost:7036/Acount/EmailConfirmation?userId=" + user.Id + "token=" + WebUtility.UrlEncode(token);
+                    var confirmationLink = Url.Action("ConfirmEmail", "Acount", new { token, email = user.Email }, Request.Scheme);
+
+
+                    MimeMessage message = new MimeMessage();
+                    message.From.Add(new MailboxAddress("Tester", "testuser34556@gmail.com"));
+                    message.To.Add(MailboxAddress.Parse("testuser34556@gmail.com"));
+                    message.Subject = "Confirmation link";
+
+                    message.Body = new TextPart("html")
+                    {
+                        Text = "Please confirm your account by clicking <a href=\"" + confirmationLink + "\">here</a>"
+                    };
+
+                    SmtpClient client = new SmtpClient();
+
+                    try
+                    {
+                        client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                        client.Authenticate("testuser34556@gmail.com", "jkxwftgymcdjvwlm");
+                        client.Send(message);
+                    }
+                    catch (Exception error)
+                    {
+                        Console.WriteLine(error);
+
+                    }
                 }
                 foreach (IdentityError error in result.Errors)
                 {

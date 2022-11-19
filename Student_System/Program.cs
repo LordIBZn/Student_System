@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Student_System.Data;
 using Microsoft.AspNetCore.Identity;
 using Student_System.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Student_SystemContext>(options =>
@@ -10,11 +11,12 @@ builder.Services.AddDbContext<Student_SystemContext>(options =>
 
 builder.Services.AddDefaultIdentity<Student>(options =>
     {
-        options.SignIn.RequireConfirmedAccount = false;
+        options.SignIn.RequireConfirmedAccount = true;
         options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
     })
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<Student_SystemContext>();
+    .AddEntityFrameworkStores<Student_SystemContext>()
+    .AddDefaultTokenProviders();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
