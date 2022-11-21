@@ -246,8 +246,8 @@ namespace Student_System.Controllers
                 if (result.Succeeded)
                 {
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //var confirmationLink = "https://localhost:7036/Acount/EmailConfirmation?userId=" + user.Id + "token=" + WebUtility.UrlEncode(token);
-                    var confirmationLink = Url.Action("ConfirmEmail", "Acount", new { token, email = user.Email }, Request.Scheme);
+                    var confirmationLink = "https://localhost:7036/Acount/EmailConfirmation?userId=" + user.Id + "&token=" + WebUtility.UrlEncode(token);
+                    //var confirmationLink = Url.Action("ConfirmEmail", "Acount", new { token, email = user.Email }, Request.Scheme);
 
 
                     MimeMessage message = new MimeMessage();
