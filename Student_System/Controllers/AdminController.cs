@@ -2,18 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Student_System.Data;
 using Student_System.Models;
 using MailKit.Net.Smtp;
-using MailKit;
 using MimeKit;
 using System.Net;
-using Microsoft.AspNetCore.WebUtilities;
-using System.Text;
-using System.Text.Encodings.Web;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using NuGet.Protocol.Plugins;
 
 namespace Student_System.Controllers
 {
@@ -249,30 +242,16 @@ namespace Student_System.Controllers
                     var confirmationLink = "https://localhost:7036/Acount/EmailConfirmation?userId=" + user.Id + "&token=" + WebUtility.UrlEncode(token);
                     //var confirmationLink = Url.Action("ConfirmEmail", "Acount", new { token, email = user.Email }, Request.Scheme);
 
-
-                    MimeMessage message = new MimeMessage();
-                    message.From.Add(new MailboxAddress("Tester", "testuser34556@gmail.com"));
-                    message.To.Add(MailboxAddress.Parse("testuser34556@gmail.com"));
-                    message.Subject = "Confirmation link";
-
-                    message.Body = new TextPart("html")
+                    EmailHelper emailHelper = new EmailHelper();
+                    bool emailResponse = emailHelper.SendEmail(user.Email, confirmationLink);
+                    
+                    if (emailResponse)
+                        return RedirectToAction("Index");
+                    else
                     {
-                        Text = "Please confirm your account by clicking <a href=\"" + confirmationLink + "\">here</a>"
-                    };
-
-                    SmtpClient client = new SmtpClient();
-
-                    try
-                    {
-                        client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                        client.Authenticate("testuser34556@gmail.com", "jkxwftgymcdjvwlm");
-                        client.Send(message);
+                        // log email failed 
                     }
-                    catch (Exception error)
-                    {
-                        Console.WriteLine(error);
 
-                    }
                 }
                 foreach (IdentityError error in result.Errors)
                 {

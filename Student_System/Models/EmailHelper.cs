@@ -1,4 +1,6 @@
-﻿using System.Net.Mail;
+﻿using Microsoft.AspNetCore.Identity;
+using MailKit.Net.Smtp;
+using MimeKit;
 
 namespace Student_System.Models
 {
@@ -6,28 +8,30 @@ namespace Student_System.Models
     {
         public bool SendEmail(string userEmail, string confirmationLink)
         {
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("testuser34556@gmail.com");
-            mailMessage.To.Add(new MailAddress(userEmail));
+            MimeMessage message = new MimeKit.MimeMessage();
+            message.From.Add(new MailboxAddress("Tester", "testuser34556@gmail.com"));
+            message.To.Add(MailboxAddress.Parse(userEmail));
+            message.Subject = "Confirmation link";
 
-            mailMessage.Subject = "Confirm your email";
-            mailMessage.IsBodyHtml = true;
-            mailMessage.Body = confirmationLink;
+            message.Body = new TextPart("html")
+            {
+                Text = "Please confirm your account by clicking <a href=\"" + confirmationLink + "\">here</a>"
+            };
 
             SmtpClient client = new SmtpClient();
-            client.Credentials = new System.Net.NetworkCredential("testuser34556@gmail.com", "jkxwftgymcdjvwlm");
-            client.Host = "smtp.gmail.com";
-            client.Port = 587;
 
             try
             {
-                client.Send(mailMessage);
-                return true;
+                client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                client.Authenticate("testuser34556@gmail.com", "jkxwftgymcdjvwlm");
+                client.Send(message);
             }
-            catch (Exception ex)
+            catch (Exception error)
             {
-                // log exception
+                Console.WriteLine(error);
+
             }
+
             return false;
         }
     }
