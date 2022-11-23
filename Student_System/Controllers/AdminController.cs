@@ -4,13 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Student_System.Data;
 using Student_System.Models;
-using MailKit.Net.Smtp;
-using MimeKit;
 using System.Net;
 
 namespace Student_System.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly Student_SystemContext _context;
