@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Student_System.Data;
 using Student_System.Models;
 using System.Net;
+using System.Windows;
 
 namespace Student_System.Controllers
 {
@@ -219,6 +220,7 @@ namespace Student_System.Controllers
         [Route("Admin/CreateAcount")]
         public async Task<IActionResult> CreateAcount(CreateAcountViewModel model)
         {
+            TempData["msg"] = "<script>alert('Se ha enviado el correo favor de revisar su email');</script>";
             var Students = _context.Students.ToList();
             ViewData["Students"] = new SelectList(Students, "Id", "Name");
 
@@ -234,17 +236,21 @@ namespace Student_System.Controllers
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
+                
+
                 if (result.Succeeded)
                 {
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var confirmationLink = "https://localhost:7036/Acount/EmailConfirmation?userId=" + user.Id + "&token=" + WebUtility.UrlEncode(token);
-                    //var confirmationLink = Url.Action("ConfirmEmail", "Acount", new { token, email = user.Email }, Request.Scheme);
 
                     EmailHelper emailHelper = new EmailHelper();
                     bool emailResponse = emailHelper.SendEmail(user.Email, confirmationLink);
-                    
+
+                    ViewBag.Mensaje = "Se ha mandado el correo favor de revisar su correo";
+
+
                     if (emailResponse)
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", "Home");
                     else
                     {
                         // log email failed 

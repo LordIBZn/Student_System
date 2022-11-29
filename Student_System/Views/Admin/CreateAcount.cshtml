@@ -4,6 +4,8 @@
     ViewBag.Tittle = "CreateAcount";
 }
 
+@Html.Raw(TempData["msg"])
+
 <h1>Create a New Identity user</h1>
 
 <form asp-action="CreateAcount" method="post" class="mt-3">
