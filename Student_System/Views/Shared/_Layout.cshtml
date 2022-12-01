@@ -22,45 +22,79 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="Index">Courses</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Resources" asp-action="Index">Resources</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Homework" asp-action="Index">Homework</a>
-                        </li>
 
-                        @if (User.IsInRole("Admin"))
-                        {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">Students</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="StudentCourses" asp-action="Index">StudentCourse</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="ResourceMore">ResourceMore</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="AllCoursesonGivenDate">AllCoursesonGivenDate</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="StudentNumberCourse">StudentNumberCourse</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CreateRol">CreateRol</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="GetRoles">GetRoles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CreateAcount">CreateAcount</a>
-                        </li>
-                        }
-                    </ul>
+                    @if (User.IsInRole("Student"))
+                    {
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary">Cursos</button>
+                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="visually-hidden">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="Index">Courses</a></li>
+                                
+                                @if (User.IsInRole("Admin"))
+                                {
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="ResourceMore">ResourceMore</a></li>
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="AllCoursesonGivenDate">AllCoursesonGivenDate</a></li>
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="ResourceMore">ResourceMore</a></li>
+                                }
+
+                            </ul>
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-secondary">Recursos</button>
+                                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Resources" asp-action="Index">Resources</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-secondary">Tareas</button>
+                                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Homework" asp-action="Index">Homework</a></li>
+                                </ul>
+                            </div>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-secondary">Studiantes</button>
+                                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">Students</a></li>
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="StudentCourses" asp-action="Index">StudentCourse</a></li>
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="StudentNumberCourse">StudentNumberCourse</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-secondary">Cuentas</button>
+                                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CreateRol">CreateRol</a></li>
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="GetRoles">GetRoles</a></li>
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CreateAcount">CreateAcount</a></li>
+                                </ul>
+                            </div>
+                                
+                            }
+
+
+                           
+                        </div>
+                    }
                 </div>
             </div>
             <div class="col-md-2">
