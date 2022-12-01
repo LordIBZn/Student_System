@@ -249,12 +249,12 @@ namespace Student_System.Controllers
                     ViewBag.Mensaje = "Se ha mandado el correo favor de revisar su correo";
 
 
-                    if (emailResponse)
-                        return RedirectToAction("Index", "Home");
-                    else
-                    {
-                        // log email failed 
-                    }
+                    //if (emailResponse)
+                    //    return RedirectToAction("Index", "Home");
+                    //else
+                    //{
+                    //    // log email failed 
+                    //}
 
                 }
                 foreach (IdentityError error in result.Errors)
@@ -264,5 +264,6 @@ namespace Student_System.Controllers
             }
             return View(model);
         }
+
     }
 }

@@ -24,9 +24,6 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">Students</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="Index">Courses</a>
                         </li>
                         <li class="nav-item">
@@ -39,18 +36,17 @@
                         @if (User.IsInRole("Admin"))
                         {
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">Students</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="StudentCourses" asp-action="Index">StudentCourse</a>
                         </li>
-                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="ResourceMore">ResourceMore</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="AllCoursesonGivenDate">AllCoursesonGivenDate</a>
                         </li>
-
-                        @if (User.IsInRole("Admin"))
-                        {
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="StudentNumberCourse">StudentNumberCourse</a>
                         </li>
@@ -63,7 +59,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CreateAcount">CreateAcount</a>
                         </li>
-
                         }
                     </ul>
                 </div>
