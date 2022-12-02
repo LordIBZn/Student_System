@@ -75,7 +75,7 @@ namespace Student_System.Controllers
             return View(homework);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Student")]
         // GET: Homework/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

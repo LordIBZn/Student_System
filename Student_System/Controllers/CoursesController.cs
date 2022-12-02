@@ -22,8 +22,19 @@ namespace Student_System.Controllers
         }
 
         // GET: Courses
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? Id)
         {
+            var CourseStudent = await _context.StudentCourses
+                .Include(cs => cs.Course)
+                .Include(cs => cs.Student)
+                .Where(cs => cs.StudentId == Id)
+                .ToListAsync();
+
+            if (Id >= 1)
+            {
+                return (IActionResult)CourseStudent;
+            }
+
             var ResourceCourses = await _context.Courses
                 .Include(rc => rc.Resources)
                 .OrderBy(rc => rc.StartDate)
@@ -58,6 +69,7 @@ namespace Student_System.Controllers
             return View(ResourceCourses);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ResourceMore()
         {
 
@@ -69,7 +81,8 @@ namespace Student_System.Controllers
 
             return View(ResourceCount);
         }
-        
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AllCoursesonGivenDate(DateTime? EndDate)
         {
             var AllCoursesonGivenDate = await _context.Courses

@@ -23,7 +23,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 
-                    @if (User.IsInRole("Student"))
+                    @if (User.IsInRole("Admin") || User.IsInRole("Student"))
                     {
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary">Cursos</button>
