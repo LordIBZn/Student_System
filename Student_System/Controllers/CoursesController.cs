@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,36 +16,49 @@ namespace Student_System.Controllers
     public class CoursesController : Controller
     {
         private readonly Student_SystemContext _context;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<Student> _userManager;
 
-        public CoursesController(Student_SystemContext context)
+        public CoursesController(Student_SystemContext context, RoleManager<IdentityRole> roleManager, UserManager<Student> userManager)
         {
             _context = context;
+            _roleManager = roleManager;
+            _userManager = userManager;
         }
 
         // GET: Courses
-        public async Task<IActionResult> Index(int? Id)
+        public async Task<IActionResult> Index()
         {
-            var CourseStudent = await _context.StudentCourses
-                .Include(cs => cs.Course)
-                .Include(cs => cs.Student)
-                .Where(cs => cs.StudentId == Id)
-                .ToListAsync();
-
-            if (Id >= 1)
+            if (User.IsInRole("Admin"))
             {
-                return (IActionResult)CourseStudent;
+                var ResourceCourses = await _context.Courses
+                    .Include(rc => rc.Resources)
+                    .OrderBy(rc => rc.StartDate)
+                    .ThenByDescending(rc => rc.EndDate)
+                    .ToListAsync();
+
+                return View(ResourceCourses);
+            }
+            else
+            {
+                return View("error");       
             }
 
-            var ResourceCourses = await _context.Courses
-                .Include(rc => rc.Resources)
-                .OrderBy(rc => rc.StartDate)
-                .ThenByDescending(rc => rc.EndDate)
-                .ToListAsync();
-
-            
-            return View(ResourceCourses);
         }
 
+        [HttpGet]
+        [Route("Courses/GetCoursesByStudentId")]
+
+        public async Task<IActionResult> GetCoursesByStudentId(string? Id)
+        {
+            var rol = _roleManager.FindByIdAsync(Id);
+
+                var CourseStudent = await _context.Courses
+                    .Where(cs => cs.Id == rol.Id).ToListAsync();
+
+            return View(CourseStudent);
+
+        }
         // GET: Courses/Details/5
         public async Task<IActionResult> Details(int? id)
         {
