@@ -2,7 +2,7 @@
 
 namespace Student_System.Models
 {
-    public class Student : IdentityUser
+    public class AspNetUsers : IdentityUser
     {
         public int StudentsId { get; set; }
     }

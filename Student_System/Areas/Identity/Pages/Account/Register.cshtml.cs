@@ -24,23 +24,23 @@ namespace Student_System.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<Student> _signInManager;
-        private readonly UserManager<Student> _userManager;
-        private readonly IUserStore<Student> _userStore;
-        private readonly IUserEmailStore<Student> _emailStore;
+        private readonly SignInManager<AspNetUsers> _signInManager;
+        private readonly UserManager<AspNetUsers> _userManager;
+        private readonly IUserStore<AspNetUsers> _userStore;
+        private readonly IUserEmailStore<AspNetUsers> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<Student> userManager,
-            IUserStore<Student> userStore,
-            SignInManager<Student> signInManager,
+            UserManager<AspNetUsers> userManager,
+            IUserStore<AspNetUsers> userStore,
+            SignInManager<AspNetUsers> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
             _userStore = userStore;
-            _emailStore = (IUserEmailStore<Student>)GetEmailStore();
+            _emailStore = (IUserEmailStore<AspNetUsers>)GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
@@ -155,27 +155,27 @@ namespace Student_System.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private Student CreateUser()
+        private AspNetUsers CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<Student>();
+                return Activator.CreateInstance<AspNetUsers>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(Student)}'. " +
-                    $"Ensure that '{nameof(Student)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(AspNetUsers)}'. " +
+                    $"Ensure that '{nameof(AspNetUsers)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
-        private IUserEmailStore<Student> GetEmailStore()
+        private IUserEmailStore<AspNetUsers> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<Student>)_userStore;
+            return (IUserEmailStore<AspNetUsers>)_userStore;
         }
     }
 }

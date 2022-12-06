@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Student_SystemContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Student_SystemContext") ?? throw new InvalidOperationException("Connection string 'Student_SystemContext' not found.")));
 
-builder.Services.AddDefaultIdentity<Student>(options =>
+builder.Services.AddDefaultIdentity<AspNetUsers>(options =>
     {
         options.SignIn.RequireConfirmedAccount = true;
         options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);

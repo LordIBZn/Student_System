@@ -14,10 +14,10 @@ namespace Student_System.Controllers
     {
         private readonly Student_SystemContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<Student> _userManager;
+        private readonly UserManager<AspNetUsers> _userManager;
 
         public AdminController(RoleManager<IdentityRole> roleManager, 
-            UserManager<Student> userManager, Student_SystemContext context)
+            UserManager<AspNetUsers> userManager, Student_SystemContext context)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -226,7 +226,7 @@ namespace Student_System.Controllers
 
             if (ModelState.IsValid)
             {
-                Student user = new Student
+                AspNetUsers user = new AspNetUsers
                 {
                     UserName = model.Email,
                     Email = model.Email,

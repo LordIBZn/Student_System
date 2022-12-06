@@ -11,10 +11,10 @@ namespace Student_System.Controllers
     {
         private readonly Student_SystemContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<Student> _userManager;
+        private readonly UserManager<AspNetUsers> _userManager;
 
         public AcountController(RoleManager<IdentityRole> roleManager,
-            UserManager<Student> userManager, Student_SystemContext context)
+            UserManager<AspNetUsers> userManager, Student_SystemContext context)
         {
             _roleManager = roleManager;
             _userManager = userManager;

@@ -17,9 +17,9 @@ namespace Student_System.Controllers
     {
         private readonly Student_SystemContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<Student> _userManager;
+        private readonly UserManager<AspNetUsers> _userManager;
 
-        public CoursesController(Student_SystemContext context, RoleManager<IdentityRole> roleManager, UserManager<Student> userManager)
+        public CoursesController(Student_SystemContext context, RoleManager<IdentityRole> roleManager, UserManager<AspNetUsers> userManager)
         {
             _context = context;
             _roleManager = roleManager;
@@ -49,14 +49,18 @@ namespace Student_System.Controllers
         [HttpGet]
         [Route("Courses/GetCoursesByStudentId")]
 
-        public async Task<IActionResult> GetCoursesByStudentId(string? Id)
+        public async Task<IActionResult> GetCoursesByStudentId()
         {
-            var rol = _roleManager.FindByIdAsync(Id);
+            //var user = await _userManager.GetUserIdAsync();
 
-                var CourseStudent = await _context.Courses
-                    .Where(cs => cs.Id == rol.Id).ToListAsync();
+            //var CourseStudent = await _context.Courses
+            //.Include(rc => rc.Resources)
+            //.OrderBy(rc => rc.StartDate)
+            //.ThenByDescending(rc => rc.EndDate);
+                /*FirstOrDefaultAsync(rc => rc.Id == StudentId);*/
 
-            return View(CourseStudent);
+
+            return View();
 
         }
         // GET: Courses/Details/5
