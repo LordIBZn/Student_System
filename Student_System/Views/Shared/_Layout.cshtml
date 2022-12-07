@@ -31,11 +31,11 @@
                                 <span class="visually-hidden">Toggle Dropdown</span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="GetCoursesByStudentId">GetCoursesByStudentId</a></li>
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="Index">Courses</a></li>
+                                
                                 
                                 @if (User.IsInRole("Admin"))
                                 {
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="Index">Courses</a></li>
                                 <li><a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="ResourceMore">ResourceMore</a></li>
                                 <li><a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="AllCoursesonGivenDate">AllCoursesonGivenDate</a></li>
                                 <li><a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="ResourceMore">ResourceMore</a></li>

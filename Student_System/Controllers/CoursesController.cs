@@ -29,6 +29,7 @@ namespace Student_System.Controllers
         // GET: Courses
         public async Task<IActionResult> Index()
         {
+            var user = await _userManager.GetUserAsync(User);
             if (User.IsInRole("Admin"))
             {
                 var ResourceCourses = await _context.Courses
@@ -39,30 +40,19 @@ namespace Student_System.Controllers
 
                 return View(ResourceCourses);
             }
-            else
+            if (User.IsInRole("Student")) 
             {
-                return View("error");       
+                var Courses = await _context.Courses
+                    .Include(cs => cs.Resources)
+                    .OrderBy(cs => cs.StartDate)
+                    .ThenByDescending(cs => cs.EndDate)
+                    .ToListAsync();
+
+                return View(Courses);
             }
-
-        }
-
-        [HttpGet]
-        [Route("Courses/GetCoursesByStudentId")]
-
-        public async Task<IActionResult> GetCoursesByStudentId()
-        {
-            //var user = await _userManager.GetUserIdAsync();
-
-            //var CourseStudent = await _context.Courses
-            //.Include(rc => rc.Resources)
-            //.OrderBy(rc => rc.StartDate)
-            //.ThenByDescending(rc => rc.EndDate);
-                /*FirstOrDefaultAsync(rc => rc.Id == StudentId);*/
-
-
             return View();
-
         }
+       
         // GET: Courses/Details/5
         public async Task<IActionResult> Details(int? id)
         {
