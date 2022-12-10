@@ -236,10 +236,10 @@ namespace Student_System.Controllers
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
-                
-
                 if (result.Succeeded)
                 {
+
+                    var role = await _userManager.AddToRoleAsync(user, "Student");
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var confirmationLink = "https://localhost:7036/Acount/EmailConfirmation?userId=" + user.Id + "&token=" + WebUtility.UrlEncode(token);
 

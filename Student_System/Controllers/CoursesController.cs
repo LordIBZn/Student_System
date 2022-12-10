@@ -42,11 +42,22 @@ namespace Student_System.Controllers
             }
             if (User.IsInRole("Student")) 
             {
+                var StudetCu = await _context.StudentCourses
+                    .Include(sc => sc.Course)
+                    .Where(sc => sc.StudentId == user.StudentsId)
+                    .Select(sc => sc.CourseId)
+                    .ToListAsync();
+
                 var Courses = await _context.Courses
+                    .Where(c => StudetCu.Contains(c.Id) )
                     .Include(cs => cs.Resources)
                     .OrderBy(cs => cs.StartDate)
                     .ThenByDescending(cs => cs.EndDate)
                     .ToListAsync();
+
+                //var StudetCu = (from sc in _context.StudentCourses
+                //                from c in _context.Courses
+                //                select sc.CourseId).ToListAsync();
 
                 return View(Courses);
             }
