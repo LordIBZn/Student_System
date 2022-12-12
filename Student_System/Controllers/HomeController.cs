@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Student_System.Models;
+using Student_System.Models.ViewModels;
 using System.Diagnostics;
 
 namespace Student_System.Controllers
