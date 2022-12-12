@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Student_System.Data;
 using Student_System.Models;
+using Student_System.Models.ViewModels;
 using System.Net;
 using System.Windows;
 

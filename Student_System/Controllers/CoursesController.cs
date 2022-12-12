@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Student_System.Data;
 using Student_System.Models;
+using Student_System.Models.ViewModels;
 
 namespace Student_System.Controllers
 {

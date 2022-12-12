@@ -1,7 +1,6 @@
-﻿using Student_System.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Student_System.Models
+namespace Student_System.Models.ViewModels
 {
     public class CoursesViewModel
     {
@@ -19,7 +18,7 @@ namespace Student_System.Models
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd} " + "Days")]
-        public  TimeSpan CourseDuration { get; set; }
+        public TimeSpan CourseDuration { get; set; }
         public int StudentCount { get; set; }
     }
 }

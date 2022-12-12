@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Student_System.Models
+namespace Student_System.Models.ViewModels
 {
     public class EditRolViewModel
     {
