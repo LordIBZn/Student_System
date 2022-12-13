@@ -4,6 +4,8 @@ using Student_System.Data;
 using Microsoft.AspNetCore.Identity;
 using Student_System.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Student_System.Services;
+using Student_System.Providers;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Student_SystemContext>(options =>
@@ -20,7 +22,8 @@ builder.Services.AddDefaultIdentity<AspNetUsers>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddSingleton<PathProvider>();
+builder.Services.AddSingleton<UploadFilesHelper>();
 var app = builder.Build();
 
 //Se crea el alcance para el SeedData
