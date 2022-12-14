@@ -15,7 +15,7 @@
             this.hostEnvironment = hostEnvironment;
         }
 
-        public string MapPath(string FileName, Folders folder)
+        public string MapPath(string fileName, Folders folder)
         {
             string carpeta = "";
             if (folder == Folders.Updload)
@@ -30,11 +30,11 @@
             {
                 carpeta = "documents";
             }
-            string path = Path.Combine(this.hostEnvironment.WebRootPath, carpeta, FileName);
+            string path = Path.Combine(this.hostEnvironment.WebRootPath, carpeta, fileName);
 
             if (folder == Folders.Temp)
             {
-                path = Path.Combine(Path.GetTempPath(), FileName);
+                path = Path.Combine(Path.GetTempPath(), fileName);
             }
 
             return path;

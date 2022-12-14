@@ -1,4 +1,4 @@
-﻿@model Student_System.Models.Homework
+﻿@model Student_System.Models.ViewModels.HomeworkViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
@@ -26,6 +26,17 @@
                 <label asp-for="SubmissionDate" class="control-label"></label>
                 <input asp-for="SubmissionDate" class="form-control" />
                 <span asp-validation-for="SubmissionDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="file">Choose the file to upload</label>
+                <input type="file" class="form-control-file" name="file" id="file" />
+                <label for="file">choose the directory to save the file</label>
+                <select name="location">
+                    <option value="1">Images</option>
+                    <option value="2">Documents</option>
+                    <option value="0">Dowloads</option>
+                    <option value="3">Temp</option>
+                </select>
             </div>
             <div class="row">
         <div class="col-md-4">

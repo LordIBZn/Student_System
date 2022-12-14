@@ -4,16 +4,16 @@ namespace Student_System.Services
 {
     public class UploadFilesHelper
     {
-        private PathProvider PathProvider;
+        private PathProvider pathProvider;
 
         public UploadFilesHelper(PathProvider pathProvider)
         {
-            PathProvider = pathProvider;
+            this.pathProvider = pathProvider;
         }
 
         public async Task<string> UploadFileAsync(IFormFile formFile, string nombreArchivo, Folders folder)
         {
-            string path = this.PathProvider.MapPath(nombreArchivo, folder);
+            string path = this.pathProvider.MapPath(nombreArchivo, folder);
 
             using (Stream stream = new FileStream(path, FileMode.Create))
             {
