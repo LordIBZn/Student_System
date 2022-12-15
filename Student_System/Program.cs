@@ -22,8 +22,8 @@ builder.Services.AddDefaultIdentity<AspNetUsers>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<PathProvider>();
-builder.Services.AddSingleton<UploadFilesHelper>();
+//builder.Services.AddSingleton<PathProvider>();
+//builder.Services.AddSingleton<UploadFilesHelper>();
 var app = builder.Build();
 
 //Se crea el alcance para el SeedData

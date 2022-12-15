@@ -17,10 +17,12 @@ namespace Student_System.Controllers
     public class HomeworkController : Controller
     {
         private readonly Student_SystemContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public HomeworkController(Student_SystemContext context)
+        public HomeworkController(Student_SystemContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Homework
@@ -65,10 +67,18 @@ namespace Student_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Content,ContentType,SubmissionDate,Students,StudentsId,File,Path")] HomeworkViewModel homework)
+        public async Task<IActionResult> Create(HomeworkViewModel homework)
         {
             if (ModelState.IsValid)
             {
+                if (homework.File != null)
+                {
+                    string folder = "files";
+                    folder += homework.File.Name + Guid.NewGuid().ToString();
+                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath,folder);
+
+                    await homework.File.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                } 
                 _context.Add(homework);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
