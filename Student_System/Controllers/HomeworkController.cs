@@ -25,6 +25,26 @@ namespace Student_System.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
+        public string UploadFile(Homework homework)
+        {
+            string fileName = null;
+
+            if (homework.File != null)
+            {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                fileName = Path.GetFileNameWithoutExtension(homework.File.FileName);
+                string extension = Path.GetExtension(homework.File.FileName);
+                string path = Path.Combine(wwwRootPath + "/files/",fileName);
+                //homework.FileName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                using (var filestream = new FileStream(path, FileMode.Create))
+                {
+                    homework.File.CopyTo(filestream);
+                }
+            }
+            return fileName;
+            
+        }
+
         // GET: Homework
         public async Task<IActionResult> Index()
         {
@@ -67,21 +87,26 @@ namespace Student_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(HomeworkViewModel homework)
+        public async Task<IActionResult> Create([Bind("Id,Content,ContentType,SubmissionDate,Students,StudentsId,File,Path")] Homework homework)
         {
             if (ModelState.IsValid)
             {
-                if (homework.File != null)
-                {
-                    string folder = "files";
-                    folder += homework.File.Name + Guid.NewGuid().ToString();
-                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath,folder);
+                //save file to wwwroot/files
+                homework.Path = UploadFile(homework);
 
-                    await homework.File.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
-                } 
+                //Insert record
                 _context.Add(homework);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+                
+                //if (homework.File != null)
+                //{
+                //    string folder = "files";
+                //    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath,folder);
+                //    folder += homework.File.Name + Guid.NewGuid().ToString();
+
+                //    await homework.File.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                //} 
             }
             return View(homework);
         }

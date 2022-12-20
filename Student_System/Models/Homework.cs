@@ -24,5 +24,8 @@ namespace Student_System.Models
         public int StudentsId { get; set; }
 
         public virtual Students? Students { get; set; }
+
+        [NotMapped]
+        public IFormFile? File { get; set; }
     }
 }
