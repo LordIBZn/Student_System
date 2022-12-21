@@ -8,7 +8,11 @@ namespace Student_System.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        
+
+        [StringLength(100)]
+        [Required]
+        public string FileName { get; set; }
+
         [StringLength(100)]
         public string Content { get; set; }
 

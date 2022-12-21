@@ -35,15 +35,21 @@ namespace Student_System.Controllers
                 fileName = Path.GetFileNameWithoutExtension(homework.File.FileName);
                 string extension = Path.GetExtension(homework.File.FileName);
                 string path = Path.Combine(wwwRootPath + "/files/",fileName);
-                //homework.FileName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                homework.FileName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
                 using (var filestream = new FileStream(path, FileMode.Create))
                 {
                     homework.File.CopyTo(filestream);
                 }
+
+                if (homework.File. )
+                {
+
+                }
             }
             return fileName;
-            
         }
+
+       
 
         // GET: Homework
         public async Task<IActionResult> Index()
@@ -87,13 +93,13 @@ namespace Student_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Content,ContentType,SubmissionDate,Students,StudentsId,File,Path")] Homework homework)
+        public async Task<IActionResult> Create([Bind("Id,Content,ContentType,SubmissionDate,Students,StudentsId,File,FileName,Path")] Homework homework)
         {
             if (ModelState.IsValid)
             {
                 //save file to wwwroot/files
-                homework.Path = UploadFile(homework);
-
+                homework.FileName = UploadFile(homework);
+               
                 //Insert record
                 _context.Add(homework);
                 await _context.SaveChangesAsync();
@@ -136,7 +142,7 @@ namespace Student_System.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Content,ContentType,SubmissionDate,Students,StudentsId,File,Path")] HomeworkViewModel homework)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Content,ContentType,SubmissionDate,Students,StudentsId,File,FileName,Path")] HomeworkViewModel homework)
         {
             if (id != homework.Id)
             {
