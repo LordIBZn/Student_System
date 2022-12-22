@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Student_System.Data;
+using Student_System.Migrations;
 using Student_System.Models;
 using Student_System.Models.ViewModels;
 
@@ -34,22 +36,43 @@ namespace Student_System.Controllers
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 fileName = Path.GetFileNameWithoutExtension(homework.File.FileName);
                 string extension = Path.GetExtension(homework.File.FileName);
-                string path = Path.Combine(wwwRootPath + "/files/",fileName);
+                string path = Path.Combine(wwwRootPath + "/files/",fileName + extension);
                 homework.FileName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
                 using (var filestream = new FileStream(path, FileMode.Create))
                 {
                     homework.File.CopyTo(filestream);
                 }
 
-                if (homework.File. )
-                {
-
-                }
             }
             return fileName;
         }
 
-       
+        public string GetPath(Homework homework)
+        {
+            
+            string fileName = null;
+            string FullPath = null;
+            string RelativePath = null;
+            if (homework.File != null)
+            {
+                
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                fileName = Path.GetFileNameWithoutExtension(homework.File.FileName);
+                string extension = Path.GetExtension(homework.File.FileName);
+                string path = Path.Combine(wwwRootPath + "/files/", fileName);
+                homework.FileName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                FullPath = path + extension;
+                
+                using (var filestream = new FileStream(path, FileMode.Create))
+                {
+                    homework.File.CopyTo(filestream);
+                }
+            }
+            return FullPath;
+
+        }
+
+
 
         // GET: Homework
         public async Task<IActionResult> Index()
@@ -95,10 +118,12 @@ namespace Student_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Content,ContentType,SubmissionDate,Students,StudentsId,File,FileName,Path")] Homework homework)
         {
+            
             if (ModelState.IsValid)
             {
                 //save file to wwwroot/files
                 homework.FileName = UploadFile(homework);
+                homework.Path = GetPath(homework);
                
                 //Insert record
                 _context.Add(homework);
