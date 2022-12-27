@@ -1,4 +1,6 @@
-﻿using Student_System.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Student_System.Models;
 namespace Student_System.Data
 {
     public class DbInitializer
@@ -6,6 +8,81 @@ namespace Student_System.Data
         public static void Initialize(Student_SystemContext context)
         {
             context.Database.EnsureCreated();
+
+            if (context.Roles.Any())
+            {
+                return;
+            }
+
+            //create roles
+            List<IdentityRole> roles = new List<IdentityRole>() {
+                 new IdentityRole{ Name = "Admin", NormalizedName = "Admin"},
+                new IdentityRole{ Name = "Student", NormalizedName = "Student"}
+            };
+
+            //var identityRole = new IdentityRole[]
+            //{
+            //    new IdentityRole{ Name = "Admin", NormalizedName = "Admin"},
+            //    new IdentityRole{ Name = "Student", NormalizedName = "Student"}
+            //};
+
+            foreach (IdentityRole ir in roles)
+            {
+                context.Roles.Add(ir);
+            }
+            context.SaveChanges();
+
+            //if (context.Users.Any())
+            //{
+            //    return;
+            //}
+
+            //create users
+            List<AspNetUsers> users = new List<AspNetUsers>() {
+                
+                new AspNetUsers
+                {
+                    UserName ="ibzedgarovillalobos@gmail.com",
+                    NormalizedUserName = "Admin",
+                    Email = "ibzedgarovillalobos@gmail.com",
+                    NormalizedEmail = "IBZEDGARDOVILLALOBOS@GMAIL.COM"
+                },
+                new AspNetUsers 
+                {
+                    UserName = "edgar@usuario.com",
+                    NormalizedUserName = "Student",
+                    Email = "edgar@usuario.com",
+                    NormalizedEmail = "EDGAR@USUARIO.COM"
+                }
+            };
+            foreach (AspNetUsers us in users)
+            {
+                context.Add(us);
+            }
+            context.SaveChanges();
+
+            //var users = new AspNetUsers[]
+            //{
+            //};
+            //context.Users.AddRange(users);
+
+            //password
+            var password = new PasswordHasher<AspNetUsers>();
+            users[0].PasswordHash = password.HashPassword(users[0], "Aq!123456");
+            users[1].PasswordHash = password.HashPassword(users[1], "Aq!123456");
+
+            //add role to user
+            List<IdentityUserRole<string>> userRoles = new List<IdentityUserRole<string>>();
+            userRoles.Add(new IdentityUserRole<string>
+            {
+                UserId = users[0].Id,
+                RoleId = roles.First(q => q.Name == "Admin").Id
+            });
+            userRoles.Add(new IdentityUserRole<string>
+            {
+                UserId = users[1].Id,
+                RoleId = roles.First(q => q.Name == "Student").Id
+            });
 
             if (context.Students.Any())
             {
@@ -93,6 +170,8 @@ namespace Student_System.Data
             {
                 return;
             }
+
+           
 
             //var resources = new Resources[]
             //{

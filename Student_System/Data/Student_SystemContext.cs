@@ -32,6 +32,7 @@ namespace Student_System.Data
 
             modelBuilder.Entity<StudentCourses>().HasKey(c => new { c.StudentId, c.CourseId });
 
+
             //modelBuilder.Entity<Students>().HasData(
             //         new Students
             //         {
