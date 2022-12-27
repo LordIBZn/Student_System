@@ -122,29 +122,29 @@ namespace Student_System.Data
                 context.SaveChanges();
             }
 
-            //if (!context.StudentCourses.Any())
-            //{
-            //    var studentCourse = new StudentCourses[]
-            //    {
-            //        new StudentCourses
-            //        {
-            //            StudentId = students.Single(s => s.Name =="pepe").Id,
-            //            CourseId = courses.Single(c => c.Name == "Astrofisica").Id,
-            //        },
-            //        new StudentCourses
-            //        {
-            //            StudentId = students.Single(s => s.Name =="Alhy").Id,
-            //            CourseId = courses.Single(c => c.Name =="Calculo").Id
-            //        },
-            //        new StudentCourses
-            //        {
-            //            StudentId = students.Single(s => s.Name =="Luis").Id,
-            //            CourseId = courses.Single(c => c.Name =="Matematicas").Id
-            //        }
-            //    };
-            //    context.StudentCourses.AddRange(studentCourse);
-            //    context.SaveChanges();
-            //}
+            if (!context.StudentCourses.Any())
+            {
+                var studentCourse = new StudentCourses[]
+                {
+                    new StudentCourses
+                    {
+                        StudentId = context.Students.Single(s => s.Name =="pepe").Id,
+                        CourseId = context.Courses.Single(c => c.Name == "Astrofisica").Id,
+                    },
+                    new StudentCourses
+                    {
+                        StudentId = context.Students.Single(s => s.Name =="Alhy").Id,
+                        CourseId = context.Courses.Single(c => c.Name =="Calculo").Id
+                    },
+                    new StudentCourses
+                    {
+                        StudentId = context.Students.Single(s => s.Name =="Luis").Id,
+                        CourseId = context.Courses.Single(c => c.Name =="Matematicas").Id
+                    }
+                };
+                context.StudentCourses.AddRange(studentCourse);
+                context.SaveChanges();
+            }
 
             //if (!context.Resources.Any())
             //{
