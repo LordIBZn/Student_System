@@ -32,8 +32,10 @@ app.Services.CreateScope();
 //SeeData
 using (var Scope = app.Services.CreateScope())
 {
+    var roleManager = Scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var _userManager = Scope.ServiceProvider.GetRequiredService<UserManager<AspNetUsers>>();
     var Contex = Scope.ServiceProvider.GetRequiredService<Student_SystemContext>();
-    DbInitializer.Initialize(Contex);
+    DbInitializer.Initialize(Contex,_userManager,roleManager);
 }
 
 // Configure the HTTP request pipeline.
