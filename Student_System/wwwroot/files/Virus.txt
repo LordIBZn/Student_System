@@ -1,0 +1,75 @@
+Malwarebytes
+www.malwarebytes.com
+
+-Log Details-
+Scan Date: 12/22/22
+Scan Time: 3:44 PM
+Log File: 8727588a-8252-11ed-9a19-10050148a1a9.json
+
+-Software Information-
+Version: 4.5.19.229
+Components Version: 1.0.1860
+Update Package Version: 1.0.63731
+License: Trial
+
+-System Information-
+OS: Windows 10 (Build 19044.2364)
+CPU: x64
+File System: NTFS
+User: DESKTOP-NKUOG8L\HP OMEN
+
+-Scan Summary-
+Scan Type: Threat Scan
+Scan Initiated By: Manual
+Result: Completed
+Objects Scanned: 430053
+Threats Detected: 5
+Threats Quarantined: 5
+Time Elapsed: 6 min, 12 sec
+
+-Scan Options-
+Memory: Enabled
+Startup: Enabled
+Filesystem: Enabled
+Archives: Enabled
+Rootkits: Disabled
+Heuristics: Enabled
+PUP: Detect
+PUM: Detect
+
+-Scan Details-
+Process: 0
+(No malicious items detected)
+
+Module: 0
+(No malicious items detected)
+
+Registry Key: 3
+Trojan.AVDisable, HKLM\SOFTWARE\MICROSOFT\WINDOWS NT\CURRENTVERSION\SCHEDULE\TASKCACHE\TREE\WD Elusion Service, Quarantined, 6968, 1109266, , , , , , 
+Trojan.AVDisable, HKLM\SOFTWARE\MICROSOFT\WINDOWS NT\CURRENTVERSION\SCHEDULE\TASKCACHE\TASKS\{22481228-A8D4-4C1B-8554-4CE507E4DBC5}, Quarantined, 6968, 1109266, , , , , , 
+Trojan.AVDisable, HKLM\SOFTWARE\MICROSOFT\WINDOWS NT\CURRENTVERSION\SCHEDULE\TASKCACHE\LOGON\{22481228-A8D4-4C1B-8554-4CE507E4DBC5}, Quarantined, 6968, 1109266, , , , , , 
+
+Registry Value: 0
+(No malicious items detected)
+
+Registry Data: 0
+(No malicious items detected)
+
+Data Stream: 0
+(No malicious items detected)
+
+Folder: 0
+(No malicious items detected)
+
+File: 2
+Trojan.AVDisable, C:\WINDOWS\SYSTEM32\TASKS\WD Elusion Service, Quarantined, 6968, 1109266, , , , , 0F91CF14EF3B93CB77E0E27D73F84E0E, C913B21C461761F35854D5A5682E4A51C2B9D293D7FE8FA7C2DDF2970C93BB11
+Trojan.AVDisable, C:\USERS\HP OMEN\APPDATA\LOCAL\APTX\V2-22\WDELUA.EXE, Quarantined, 6968, 1109266, 1.0.63731, , ame, , F9257E835F7E73687BD3C1F38BE7E295, 614947150352B9365AF5BADADA87E7E61FFF6DE725D06A75B9AD2110975DC09F
+
+Physical Sector: 0
+(No malicious items detected)
+
+WMI: 0
+(No malicious items detected)
+
+
+(end)

@@ -10,8 +10,7 @@ namespace Student_System.Models
         public int Id { get; set; }
 
         [StringLength(100)]
-        [Required]
-        public string FileName { get; set; }
+        public string? FileName { get; set; }
 
         [StringLength(100)]
         public string Content { get; set; }

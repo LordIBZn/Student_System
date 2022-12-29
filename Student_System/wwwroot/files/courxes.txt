@@ -1,0 +1,10 @@
+ //var CourseStudent = await _context.StudentCourses
+            //    .Include(cs => cs.Course)
+            //    .Include(cs => cs.Student)
+            //    .Where(cs => cs.StudentId == id)
+            //    .ToListAsync();
+
+            //if (id >= 1)
+            //{
+            //    return (IActionResult)CourseStudent;   
+            //}
