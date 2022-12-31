@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -74,18 +75,30 @@ namespace Student_System.Controllers
         }
 
         [HttpPost]
-        public FileResult DowloadsFile(int Id)
+        public FileStreamResult DowloadsFile(int Id)
         {
             var homework = _context.Homework
                 .Where(i => i.Id == Id)
                 .FirstOrDefault();
 
-            return File("/files/curriculum.pdf", "application/octet-stream", "curriculum.pdf");
+            string fileName = homework.FileName;
+            string fileNameNotnumber = Regex.Replace(fileName, @"[\d-]", string.Empty);
+
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            string path = Path.Combine(wwwRootPath + "/files/" + fileNameNotnumber);
+            var stream = new MemoryStream(System.IO.File.ReadAllBytes(path));
+
+            return new FileStreamResult(stream, "application/octet-stream")
+            {
+                FileDownloadName = "File.pdf"
+            };
+
         }
 
         // GET: Homework
         public async Task<IActionResult> Index()
         {
+
             var StudentHomework = await _context.Homework
                 .Include(sh => sh.Students)
                 .ToListAsync();
