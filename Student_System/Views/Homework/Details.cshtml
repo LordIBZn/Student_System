@@ -10,6 +10,12 @@
     <h4>Homework</h4>
     <hr />
     <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FileName)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Content)
         </dt>
@@ -22,6 +28,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ContentType)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Path)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Path)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.SubmissionDate)
         </dt>
@@ -29,6 +41,14 @@
             @Html.DisplayFor(model => model.SubmissionDate)
         </dd>
     </dl>
+       
+    <div class="row">
+        <div class="col-md-4">
+            <iframe src="~/files/csharp_loops.pdf"  width="500" height="375"/>
+        </div>
+    </div>
+        
+    
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |

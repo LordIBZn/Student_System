@@ -48,6 +48,7 @@ namespace Student_System.Controllers
             return fileName;
         }
 
+
         public string GetPath(Homework homework)
         {
             
@@ -95,6 +96,24 @@ namespace Student_System.Controllers
                 FileDownloadName = fileNameNotExtension + extension
             };
 
+        }
+
+        public VirtualFileResult GetVirtualFile(int id)
+        {
+            var homework = _context.Homework
+                .Where(i => i.Id == id)
+                .FirstOrDefault();
+
+            string fileName = homework.FileName;
+            string fileNameNotnumber = Regex.Replace(fileName, @"[\d-]", string.Empty);
+            string fileNameNotExtension = Path.ChangeExtension(fileNameNotnumber, null);
+            string extension = Path.GetExtension(fileName);
+
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            string path = Path.Combine(wwwRootPath + "/files/" + fileNameNotExtension + extension);
+            var stream = new MemoryStream(System.IO.File.ReadAllBytes(path));
+
+            return new VirtualFileResult(path, "application/octet-stream");
         }
 
         // GET: Homework

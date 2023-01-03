@@ -53,8 +53,8 @@
             </td> 
             <td>
                     <form asp-action="DowloadsFile" method="post">
-                        <input type="text" name="Id" value="@item.Id">
-                        <button class="btn btn-danger btn-sm" type="submit">Dowload</button>
+                        <input type="hidden" name="Id" value="@item.Id">
+                        <button class="btn btn-success btn-sm" type="submit">Dowload</button>
                 </form>
             </td> 
 
