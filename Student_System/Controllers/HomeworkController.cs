@@ -114,7 +114,7 @@ namespace Student_System.Controllers
 
             string Vpath = Path.Combine("~/files/", fileNameNotnumber);
 
-            return new VirtualFileResult(Vpath, "application/octet-stream");
+            return new VirtualFileResult(Vpath, "application/pdf");
         }
 
         // GET: Homework
