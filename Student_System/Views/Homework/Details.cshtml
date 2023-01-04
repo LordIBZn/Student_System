@@ -41,10 +41,14 @@
             @Html.DisplayFor(model => model.SubmissionDate)
         </dd>
     </dl>
-       
+    <form asp-action="GetVirtualFile" method="post">
+        <input type="hidden" name="id" value="@Model.Id">
+        <button class="btn btn-success btn-sm" type="submit">GetVirtualFile</button>
+    </form>
+
     <div class="row">
         <div class="col-md-4">
-            <iframe src="~/files/csharp_loops.pdf"  width="500" height="375"/>
+            <iframe src=@Html.DisplayFor(model => model.Id) width="500" height="375"/>
         </div>
     </div>
         

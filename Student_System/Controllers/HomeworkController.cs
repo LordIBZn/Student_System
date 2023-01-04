@@ -111,9 +111,10 @@ namespace Student_System.Controllers
 
             string wwwRootPath = _webHostEnvironment.WebRootPath;
             string path = Path.Combine(wwwRootPath + "/files/" + fileNameNotExtension + extension);
-            var stream = new MemoryStream(System.IO.File.ReadAllBytes(path));
 
-            return new VirtualFileResult(path, "application/octet-stream");
+            string Vpath = Path.Combine("~/files/", fileNameNotnumber);
+
+            return new VirtualFileResult(Vpath, "application/octet-stream");
         }
 
         // GET: Homework
