@@ -6,6 +6,8 @@ using Student_System.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Student_System.Services;
 using Student_System.Providers;
+using Hangfire;
+using Hangfire.SqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Student_SystemContext>(options =>
@@ -20,10 +22,28 @@ builder.Services.AddDefaultIdentity<AspNetUsers>(options =>
     .AddEntityFrameworkStores<Student_SystemContext>()
     .AddDefaultTokenProviders();
 
+var conectionString = builder.Configuration.GetConnectionString("HangfireConnection");
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 //builder.Services.AddSingleton<PathProvider>();
 //builder.Services.AddSingleton<UploadFilesHelper>();
+
+builder.Services.AddHangfire(configuration => configuration.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+.UseSimpleAssemblyNameTypeSerializer()
+.UseSimpleAssemblyNameTypeSerializer()
+.UseRecommendedSerializerSettings()
+.UseSqlServerStorage(conectionString, new SqlServerStorageOptions
+{
+    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+    QueuePollInterval = TimeSpan.Zero,
+    UseRecommendedIsolationLevel = true,
+    DisableGlobalLocks = true
+}));
+
+builder.Services.AddHangfireServer();
+
 var app = builder.Build();
 
 //Se crea el alcance para el SeedData
@@ -52,6 +72,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
+
+app.UseHangfireDashboard();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
